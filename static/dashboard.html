@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kotodama ダッシュボード</title>
+    <link rel="stylesheet" href="app.css" />
+    <style>
+      html, body { height: 100%; }
+      body { display: grid; grid-template-columns: 320px 1fr; }
+      aside { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--line); background: var(--surface); }
+      aside header { padding: 18px 18px 12px; }
+      #stats { margin: 6px 0 12px; color: var(--muted); font-size: 12px; }
+      #search {
+        width: 100%;
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--bg);
+        color: inherit;
+        font: inherit;
+      }
+      #videos { flex: 1; overflow-y: auto; margin: 0; padding: 0 8px 12px; list-style: none; }
+      #videos li { padding: 9px 10px; border-radius: 8px; cursor: pointer; }
+      #videos li:hover { background: var(--hover); }
+      #videos li[aria-current="true"] { background: var(--accent-soft); }
+      #videos strong { display: -webkit-box; overflow: hidden; font-size: 13px; font-weight: 600; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+      #videos span { color: var(--muted); font-size: 11px; }
+      #videos .empty { color: var(--muted); font-size: 12px; cursor: default; }
+      #videos .empty:hover { background: none; }
+      aside footer { padding: 12px 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+      aside footer a { color: inherit; }
+      main { min-width: 0; overflow-y: auto; }
+      #detail, #welcome { max-width: 860px; margin: 0 auto; padding: 28px 32px 60px; }
+      #detail[hidden], #welcome[hidden] { display: none; }
+      #title { margin: 0; font-size: 21px; line-height: 1.4; text-wrap: balance; }
+      #meta { margin: 6px 0 14px; color: var(--muted); font-size: 12px; }
+      #meta a { color: inherit; }
+      #actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+      #actions .danger { margin-left: auto; }
+      section h2 { display: flex; gap: 10px; align-items: baseline; margin: 0 0 10px; font-size: 14px; }
+      section h2 small { color: var(--muted); font-size: 11px; font-weight: 400; }
+      #summary-card { margin-bottom: 28px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+      #summary-message { margin: 0; font-size: 13px; }
+      #summary-message:empty, #overview:empty { display: none; }
+      #overview { margin: 0 0 10px; }
+      #points, #entries { margin: 0; padding: 0; list-style: none; }
+      #points li, #entries li { display: grid; grid-template-columns: 60px 1fr; gap: 12px; }
+      #points li { padding: 3px 0; }
+      #entries li { padding: 8px 10px; border-radius: 8px; }
+      #entries li:hover { background: var(--hover); }
+      #entries p { margin: 0; }
+      #entries .en { color: var(--muted); font-size: 12px; line-height: 1.5; }
+      #entries .en[hidden] { display: none; }
+      #welcome h2 { margin: 40px 0 8px; font-size: 20px; }
+      #welcome ol { padding-left: 1.4em; color: var(--muted); }
+      #welcome li { margin: 4px 0; }
+      @media (max-width: 760px) {
+        body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+        aside { max-height: 40vh; border-right: 0; border-bottom: 1px solid var(--line); }
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <header>
+        <h1 class="brand">Kotodama</h1>
+        <p id="stats"></p>
+        <input id="search" type="search" placeholder="タイトルで絞り込む" aria-label="タイトルで絞り込む" />
+      </header>
+      <ul id="videos"></ul>
+      <footer><a id="options" href="#">設定を開く</a></footer>
+    </aside>
+    <main>
+      <div id="welcome">
+        <h2>翻訳した動画をここで読み返せます</h2>
+        <p class="muted">左の一覧から動画を選ぶと、まとめとタイムラインを表示します。</p>
+        <h2>新しく翻訳するには</h2>
+        <ol>
+          <li>翻訳したい動画のタブを開く</li>
+          <li>ツールバーの Kotodama アイコンを押し、「このタブを翻訳する」を押す（または Alt+Shift+K）</li>
+          <li>動画を再生する。訳は別ウィンドウに並び、ここにも自動で保存されます</li>
+        </ol>
+      </div>
+      <article id="detail" hidden>
+        <h1 id="title"></h1>
+        <p id="meta"></p>
+        <div id="actions">
+          <button id="open" class="primary" type="button">動画を開く</button>
+          <button id="copy" class="ghost" type="button">訳をコピー</button>
+          <button id="export" class="ghost" type="button">Markdownで書き出す</button>
+          <button id="english" class="ghost" type="button" aria-pressed="true">英語の原文</button>
+          <button id="delete" class="ghost danger" type="button">削除</button>
+        </div>
+        <section id="summary-card">
+          <h2>まとめ <small id="summary-meta"></small></h2>
+          <p id="summary-message" class="muted"></p>
+          <p id="overview"></p>
+          <ul id="points"></ul>
+          <p style="margin: 12px 0 0"><button id="summarize" class="ghost" type="button">まとめを作る</button></p>
+        </section>
+        <section>
+          <h2>タイムライン <small id="count"></small></h2>
+          <ol id="entries"></ol>
+        </section>
+      </article>
+    </main>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

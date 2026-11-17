@@ -1,0 +1,31 @@
+{
+  "name": "kotodama",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YouTubeなどの英語音声をリアルタイムで日本語字幕にするChrome拡張",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moguone/kotodama.git"
+  },
+  "homepage": "https://github.com/moguone/kotodama#readme",
+  "bugs": {
+    "url": "https://github.com/moguone/kotodama/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "packageManager": "pnpm@10.20.0",
+  "devDependencies": {
+    "@types/chrome": "^0.3.7",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

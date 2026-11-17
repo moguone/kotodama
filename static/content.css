@@ -1,0 +1,137 @@
+/* 字幕。YouTube のプレイヤー（#movie_player）の中に置く。 */
+.kotodama-overlay {
+  --kotodama-font: 22px;
+  --kotodama-scale: 1;
+
+  position: absolute;
+  left: 50%;
+  /* 操作バーが出ているあいだは、その上に出す。 */
+  bottom: 64px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+  width: max-content;
+  max-width: 78%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: calc(var(--kotodama-font) * var(--kotodama-scale));
+  text-align: center;
+  transition:
+    bottom 0.2s ease,
+    opacity 0.25s ease;
+}
+
+/* 操作バーが消えたら下へ寄せる。 */
+.ytp-autohide > .kotodama-overlay {
+  bottom: 20px;
+}
+
+.kotodama-overlay.kotodama-fixed {
+  position: fixed;
+  bottom: 6%;
+  z-index: 2147483647;
+}
+
+.kotodama-overlay.kotodama-empty {
+  opacity: 0;
+}
+
+.kotodama-overlay[hidden],
+.kotodama-overlay [hidden] {
+  display: none;
+}
+
+.kotodama-caption {
+  max-width: 100%;
+  padding: 0.2em 0.6em 0.25em;
+  border-radius: 0.25em;
+  background: rgb(8 8 8 / 60%);
+  color: #fff;
+}
+
+.kotodama-ja {
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.kotodama-en {
+  margin-top: 0.1em;
+  font-size: 0.56em;
+  line-height: 1.35;
+  color: rgb(255 255 255 / 72%);
+  text-wrap: balance;
+}
+
+/* 聞き取り中の英語。訳が出るまでのつなぎなので控えめに。 */
+.kotodama-live {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.1em 0.6em;
+  border-radius: 0.25em;
+  background: rgb(8 8 8 / 38%);
+  color: rgb(255 255 255 / 62%);
+  font-size: 0.52em;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 状態表示。プレイヤーの左上に小さく出す。 */
+.kotodama-status {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 61;
+  max-width: 60%;
+  padding: 3px 10px 3px 22px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 60%);
+  color: rgb(255 255 255 / 88%);
+  font: 12px/1.5 "Hiragino Sans", "Noto Sans JP", sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.kotodama-status::before {
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9a9a9a;
+  transform: translateY(-50%);
+  content: "";
+}
+
+.kotodama-status[data-state="listening"]::before {
+  background: #3ecf6e;
+}
+
+.kotodama-status[data-state="connecting"]::before {
+  background: #f0b429;
+}
+
+.kotodama-status[data-state="error"] {
+  background: rgb(150 20 20 / 88%);
+  color: #fff;
+}
+
+.kotodama-status[data-state="error"]::before {
+  background: #fff;
+}
+
+.kotodama-status.kotodama-fixed {
+  position: fixed;
+  z-index: 2147483647;
+}
+
+.kotodama-status.kotodama-visible {
+  opacity: 1;
+}

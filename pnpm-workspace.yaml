@@ -1,0 +1,9 @@
+# 公開から2880分（2日）経過していないバージョンはインストールしない
+minimumReleaseAge: 2880
+
+# ネイティブbuild scriptはesbuildだけ許可する
+onlyBuiltDependencies:
+  - esbuild
+
+# レジストリ外の推移依存を取り込まない
+blockExoticSubdeps: true

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kotodama</title>
+    <link rel="stylesheet" href="app.css" />
+    <style>
+      body { width: 340px; }
+      header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px 8px; }
+      header a { color: var(--muted); font-size: 12px; text-decoration: none; }
+      header a:hover { color: var(--fg); }
+      #current { margin: 0 14px 12px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+      #current-label { margin: 0; color: var(--muted); font-size: 11px; }
+      #current-title { margin: 2px 0 10px; overflow: hidden; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+      #toggle, #import { width: 100%; }
+      #import[hidden], #import-note[hidden] { display: none; }
+      #import-note { margin: 4px 0 10px; font-size: 11px; }
+      #toggle.secondary { padding: 6px 12px; background: transparent; color: var(--fg); font-weight: 400; box-shadow: inset 0 0 0 1px var(--line); }
+      #toggle.secondary:hover { background: var(--hover); }
+      #message { margin: 8px 0 0; font-size: 12px; }
+      #message:empty { display: none; }
+      h2 { margin: 0; padding: 0 14px 4px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+      #recent { margin: 0; padding: 0 6px; list-style: none; }
+      #recent li { padding: 6px 8px; border-radius: 7px; cursor: pointer; }
+      #recent li:hover { background: var(--hover); }
+      #recent strong { display: block; overflow: hidden; font-size: 13px; font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+      #recent span { color: var(--muted); font-size: 11px; }
+      #recent .empty { color: var(--muted); font-size: 12px; cursor: default; }
+      #recent .empty:hover { background: none; }
+      footer { margin-top: 8px; padding: 10px 14px 12px; border-top: 1px solid var(--line); }
+      footer button { width: 100%; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="brand">Kotodama</h1>
+      <a id="options" href="#">設定</a>
+    </header>
+    <section id="current">
+      <p id="current-label">いまのタブ</p>
+      <p id="current-title"></p>
+      <button id="import" class="primary" type="button" hidden>字幕から翻訳する</button>
+      <p id="import-note" class="muted" hidden></p>
+      <button id="toggle" class="primary" type="button">このタブを翻訳する</button>
+      <p id="message" role="status"></p>
+    </section>
+    <h2>最近の翻訳</h2>
+    <ul id="recent"></ul>
+    <footer><button id="dashboard" class="ghost" type="button">ダッシュボードを開く</button></footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

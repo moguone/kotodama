@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kotodama 設定</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fafafa;
+        --fg: #1a1a1a;
+        --muted: #666;
+        --border: #d4d4d4;
+        --accent: #b8322a;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --fg: #eee;
+          --muted: #9a9a9a;
+          --border: #3a3a3c;
+          --accent: #e0574e;
+        }
+      }
+      body {
+        max-width: 560px;
+        margin: 40px auto;
+        padding: 0 16px;
+        background: var(--bg);
+        color: var(--fg);
+        font: 15px/1.6 "Hiragino Sans", system-ui, sans-serif;
+      }
+      h1 { margin: 0 0 4px; font-size: 22px; }
+      p.lead { margin: 0 0 28px; color: var(--muted); }
+      label { display: block; margin-bottom: 18px; font-weight: 600; }
+      label small { display: block; font-weight: 400; color: var(--muted); }
+      input[type="text"], input[type="password"], input[type="number"] {
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 6px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+      }
+      label.check { display: flex; gap: 8px; align-items: center; }
+      button {
+        padding: 8px 20px;
+        border: 0;
+        border-radius: 6px;
+        background: var(--accent);
+        color: #fff;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      #saved { margin-left: 12px; color: var(--muted); }
+      button.link { padding: 0; background: none; color: var(--accent); font-weight: 400; text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <h1>Kotodama 設定</h1>
+    <p class="lead">ツールバーのアイコン（または Alt+Shift+K）で、開いているタブの翻訳を開始・停止します。訳は別ウィンドウに時系列で表示します。</p>
+    <form id="settings">
+      <label>
+        OpenAI APIキー
+        <small>このブラウザの拡張機能ストレージにだけ保存されます。</small>
+        <input type="password" name="apiKey" autocomplete="off" spellcheck="false" />
+      </label>
+      <label>
+        文字起こしモデル
+        <small>gpt-live-transcribe（逐次表示・推奨）または gpt-transcribe（区切りごと・安価）</small>
+        <input type="text" name="transcribeModel" list="transcribe-models" />
+      </label>
+      <label>
+        仮の訳のモデル
+        <small>話している途中の訳に使います。約1.2秒おきに呼ぶので、速くて安いモデルが向いています。</small>
+        <input type="text" name="draftModel" list="translate-models" />
+      </label>
+      <label>
+        確定の訳のモデル
+        <small>文が完結したときの訳に使います。保存されて、あとから読み返す文になります。</small>
+        <input type="text" name="translateModel" list="translate-models" />
+      </label>
+      <label>
+        まとめのモデル
+        <small>「まとめ」を押したときに1回だけ呼びます。</small>
+        <input type="text" name="summaryModel" list="translate-models" />
+      </label>
+      <p><button id="reset-models" type="button" class="link">モデルをおすすめの組み合わせに戻す</button></p>
+      <label>
+        区切りの最大秒数
+        <small>話し続けていても、この秒数で区切って翻訳します。短いほど早く訳が出ますが、文が細切れになります。</small>
+        <input type="number" name="maxSegmentSeconds" min="3" max="20" step="1" />
+      </label>
+      <label class="check">
+        <input type="checkbox" name="showOverlay" />
+        動画の上にも字幕を表示する
+      </label>
+      <label>
+        動画の上の字幕の文字サイズ（px）
+        <small>プレイヤーの幅が1000pxのときの大きさです。プレイヤーの大きさに合わせて拡大・縮小します。</small>
+        <input type="number" name="fontSize" min="12" max="64" step="1" />
+      </label>
+      <label class="check">
+        <input type="checkbox" name="showEnglish" />
+        訳と一緒に英語の原文も表示する
+      </label>
+      <label class="check">
+        <input type="checkbox" name="showLiveEnglish" />
+        聞き取り中の英語を表示する
+      </label>
+      <button type="submit">保存</button><span id="saved" role="status"></span>
+    </form>
+    <datalist id="transcribe-models">
+      <option value="gpt-live-transcribe"></option>
+      <option value="gpt-transcribe"></option>
+    </datalist>
+    <datalist id="translate-models">
+      <option value="gpt-6-luna"></option>
+      <option value="gpt-6.1-terra"></option>
+      <option value="gpt-6.1-sol"></option>
+      <option value="gpt-6-astra"></option>
+      <option value="gpt-5.4-mini"></option>
+    </datalist>
+    <script src="options.js"></script>
+  </body>
+</html>
