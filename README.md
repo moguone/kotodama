@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/icon.svg" alt="" width="88" height="88" /></p>
+
 # Kotodama
 
 [日本語](README.ja.md)
@@ -5,8 +7,14 @@
 A Chrome extension that turns English video audio into Japanese subtitles, keeps them as a
 timestamped timeline per video, and summarizes them. It uses your own OpenAI API key.
 
-> Kotodama is an unofficial, personal project. It is not affiliated with or endorsed by
-> YouTube, Google, or OpenAI.
+![Dashboard: saved videos on the left, the summary and timeline of the selected video on the right](docs/images/dashboard.png)
+
+<p align="center">
+  <img src="docs/images/timeline.png" alt="Timeline window during live translation: one row per sentence with the video time, and a draft translation at the bottom" width="47%" />
+  <img src="docs/images/popup.png" alt="Panel opened from the toolbar icon: translate from captions, live translation, and recent videos" width="42%" />
+</p>
+
+The screenshots show made-up sample data.
 
 ## What it does
 
@@ -119,6 +127,7 @@ YouTube changes it.
 pnpm typecheck   # TypeScript
 pnpm build       # bundle into dist/
 pnpm smoke       # check the OpenAI connection without a browser (macOS, needs OPENAI_API_KEY)
+scripts/screenshots/capture.sh   # retake the README screenshots (macOS, needs Google Chrome)
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). To report a vulnerability, see [SECURITY.md](SECURITY.md).
@@ -128,5 +137,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). To report a vulnerability, see [SECURITY
 [MIT](LICENSE). The repository bundles no third-party code; see
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for build-time dependencies.
 
-YouTube is a trademark of Google LLC. OpenAI is a trademark of OpenAI. Use of those services is
-subject to their own terms.
+Kotodama is an unofficial project. YouTube is a trademark of Google LLC. OpenAI is a trademark of
+OpenAI. Use of those services is subject to their own terms.
