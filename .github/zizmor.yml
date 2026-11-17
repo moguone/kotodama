@@ -1,0 +1,5 @@
+rules:
+  dependabot-cooldown:
+    config:
+      # dependabot.yml の cooldown（3日）にそろえる。脆弱性修正の security updates は cooldown を待たない。
+      days: 3

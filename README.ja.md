@@ -1,10 +1,19 @@
+<p align="center"><img src="assets/icon.svg" alt="" width="88" height="88" /></p>
+
 # Kotodama
 
 [English](README.md)
 
 動画の英語音声を日本語字幕にし、動画ごとに時刻つきのタイムラインとして保存して、まとめも作る Chrome 拡張です。自分の OpenAI APIキーで動かします。
 
-> Kotodama は個人が作っている非公式のツールです。YouTube、Google、OpenAI とは関係がなく、各社の承認を受けたものでもありません。
+![ダッシュボード: 左に保存した動画の一覧、右に選んだ動画のまとめとタイムライン](docs/images/dashboard.png)
+
+<p align="center">
+  <img src="docs/images/timeline.png" alt="リアルタイム翻訳中のタイムライン: 1文ごとに動画の時刻と訳が並び、下端に仮の訳が出る" width="47%" />
+  <img src="docs/images/popup.png" alt="アイコンを押すと開くパネル: 字幕から翻訳、リアルタイムで聞き取る、最近の翻訳" width="42%" />
+</p>
+
+画像の内容は、説明用に作った架空のデータです。
 
 ## 2つの翻訳のしかた
 
@@ -135,6 +144,7 @@ pnpm build
 pnpm typecheck   # 型チェック
 pnpm build       # dist/ へビルド
 pnpm smoke       # ブラウザを使わずに OpenAI との接続を確かめる（macOS。OPENAI_API_KEY が必要）
+scripts/screenshots/capture.sh   # README の画像を撮り直す（macOS。Google Chrome が必要）
 ```
 
 `pnpm smoke` は、macOS の `say` で英語音声を作り、拡張と同じ手順（client secret → WebSocket → 文字起こし → 翻訳）で流します。
@@ -159,4 +169,4 @@ TRANSCRIBE_MODEL=gpt-transcribe OPENAI_API_KEY=sk-... pnpm smoke
 
 [MIT](LICENSE)。第三者のコードは同梱していません。ビルド時に使うパッケージは [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) にあります。
 
-YouTube は Google LLC の商標です。OpenAI は OpenAI の商標です。各サービスの利用には、それぞれの規約が適用されます。
+Kotodama は非公式のツールです。YouTube は Google LLC の商標です。OpenAI は OpenAI の商標です。各サービスの利用には、それぞれの規約が適用されます。

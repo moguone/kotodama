@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "YouTubeなどの英語音声をリアルタイムで日本語字幕にするChrome拡張",
+  "description": "動画の英語音声を日本語字幕にし、動画ごとのタイムラインとまとめを保存するChrome拡張",
   "license": "MIT",
   "repository": {
     "type": "git",

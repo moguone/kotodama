@@ -24,4 +24,20 @@ Load `dist/` as an unpacked extension from `chrome://extensions`.
 - New dependencies must be at least two days old (`minimumReleaseAge` in `pnpm-workspace.yaml`).
 - Never commit API keys, recordings, or transcripts of real videos.
 
+## GitHub Actions
+
+Actions are pinned with a lockfile, `.github/workflows/actions.lock`. Workflows reference actions by
+tag (for example `actions/checkout@v7.0.1`), and the lockfile decides which commit runs.
+
+Dependabot updates both the `uses:` lines and the lockfile. If you add or change a `uses:` line by
+hand, update the lockfile in the same pull request:
+
+```bash
+gh extension install github/gh-actions-lock   # first time only
+gh actions-lock
+```
+
+CI fails when the lockfile does not match the workflows (`gh actions-lock --verify`), and zizmor
+checks the workflows.
+
 By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE).

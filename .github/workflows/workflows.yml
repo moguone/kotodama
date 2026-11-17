@@ -1,0 +1,42 @@
+name: Workflows
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: workflows-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  zizmor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@v0.8.1
+        with:
+          advanced-security: false
+          inputs: .github
+          min-confidence: medium
+          min-severity: medium
+          online-audits: false
+          persona: regular
+  actions-lock:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      # actions.lock がワークフローと一致し、固定したコミットが upstream で検証できることを確認する。
+      - name: Install gh-actions-lock
+        run: gh extension install github/gh-actions-lock --pin v0.4.1
+      - name: Verify actions.lock
+        run: gh actions-lock --verify
